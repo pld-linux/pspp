@@ -1,0 +1,30 @@
+--- pspp-0.8.4/doc/pspp-dev.texi.orig	2014-09-27 05:44:30.000000000 +0200
++++ pspp-0.8.4/doc/pspp-dev.texi	2014-10-31 23:18:06.539656487 +0100
+@@ -28,9 +28,9 @@
+ @finalout
+ @end iftex
+ 
+-@dircategory Math
++@dircategory Scientific software:
+ @direntry
+-* PSPP Developers Guide: (pspp-dev). Tutorial and reference for PSPP developers.
++* PSPP Developers Guide: (pspp-dev).	Tutorial and reference for PSPP developers
+ @end direntry
+ 
+ @copying
+--- pspp-0.8.4/doc/pspp.texi.orig	2014-09-27 05:44:38.000000000 +0200
++++ pspp-0.8.4/doc/pspp.texi	2014-10-31 23:17:46.449657330 +0100
+@@ -44,10 +44,10 @@
+ @finalout
+ @end iftex
+ 
+-@dircategory Math
++@dircategory Scientific software:
+ @direntry
+-* PSPP: (pspp).             Statistical analysis package.
+-* PSPPIRE: (pspp).          Graphical user interface to @pspp{}.
++* PSPP: (pspp).				Statistical analysis package
++* PSPPIRE: (pspp).			Graphical user interface to @pspp{}
+ @end direntry
+ 
+ @copying
