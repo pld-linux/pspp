@@ -24,7 +24,7 @@ BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	texinfo
 BuildRequires:	zlib-devel
-Requires:	%{name}-libs = %{version}
+Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo >= 1.5
 Requires:	gtk+2 >= 2:2.24
 Requires:	gtksourceview2 >= 2.2
@@ -42,12 +42,13 @@ to wolnodostępny zamiennik własnościowego programu SPSS; jest do niego
 dosyć podobny z kilkoma wyjątkami.
 
 %package libs
-Summary:	GNU PSPP libraries and command line tools 
+Summary:	GNU PSPP libraries and command line tools
 Group:		Applications/Science
 Requires:	gsl >= 1.13
+Conflicts:	pspp < 0.8.5-1
 
 %description libs
-GNU PSP libraries command line tools 
+GNU PSP libraries command line tools
 
 %prep
 %setup -q
@@ -90,6 +91,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/psppire.1*
 
 %files libs
+%defattr(644,root,root,755)
+%doc AUTHORS ChangeLog NEWS ONEWS README THANKS TODO
 %attr(755,root,root) %{_bindir}/pspp-convert
 %attr(755,root,root) %{_bindir}/pspp-dump-sav
 %dir %{_libdir}/pspp
@@ -97,4 +100,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/pspp/libpspp-core-%{version}.so
 %{_mandir}/man1/pspp-convert.1*
 %{_mandir}/man1/pspp-dump-sav.1*
-%doc AUTHORS ChangeLog NEWS ONEWS README THANKS TODO
