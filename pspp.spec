@@ -1,13 +1,14 @@
 Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
-Version:	0.8.5
-Release:	3
+Version:	0.10.2
+Release:	1
 License:	GPL v3+
 Group:		Applications/Science
 Source0:	http://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
-# Source0-md5:	7600234a8a968c513a2e5c5dbecfc392
+# Source0-md5:	9c5a3295d59b07a9a4462148371723ae
 Patch0:		%{name}-info.patch
+Patch1:		perl-no-dot-in-inc.patch
 URL:		http://www.gnu.org/software/pspp/
 BuildRequires:	cairo-devel >= 1.5
 BuildRequires:	gettext-devel
@@ -53,6 +54,7 @@ GNU PSP libraries command line tools
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure \
