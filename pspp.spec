@@ -12,9 +12,10 @@ Patch1:		perl-no-dot-in-inc.patch
 URL:		http://www.gnu.org/software/pspp/
 BuildRequires:	cairo-devel >= 1.5
 BuildRequires:	gettext-devel
+BuildRequires:	glib2-devel >= 1:2.32
 BuildRequires:	gsl-devel >= 1.13
-BuildRequires:	gtk+2-devel >= 2:2.24
-BuildRequires:	gtksourceview2-devel >= 2.2
+BuildRequires:	gtk+3-devel >= 3.4.2
+BuildRequires:	gtksourceview3-devel >= 3.4.2
 BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
@@ -27,8 +28,9 @@ BuildRequires:	texinfo
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo >= 1.5
-Requires:	gtk+2 >= 2:2.24
-Requires:	gtksourceview2 >= 2.2
+Requires:	glib2 >= 1:2.32
+Requires:	gtk+3 >= 3.4.2
+Requires:	gtksourceview3 >= 3.4.2
 Requires:	pango >= 1:1.22
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -44,12 +46,16 @@ dosyć podobny z kilkoma wyjątkami.
 
 %package libs
 Summary:	GNU PSPP libraries and command line tools
+Summary(pl.UTF-8):	Biblioteki GNU PSPP i narzędzia linii poleceń
 Group:		Applications/Science
 Requires:	gsl >= 1.13
 Conflicts:	pspp < 0.8.5-1
 
 %description libs
-GNU PSP libraries command line tools
+GNU PSP libraries command line tools.
+
+%description libs -l pl.UTF-8
+Biblioteki GNU PSPP i narzędzia linii poleceń.
 
 %prep
 %setup -q
