@@ -15,6 +15,7 @@ Source0:	http://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
 # Source0-md5:	ac18c5da11915e59ec32fe00e541abb8
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-perl.patch
+Patch2:		%{name}-glade.patch
 URL:		http://www.gnu.org/software/pspp/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake
@@ -24,7 +25,7 @@ BuildRequires:	glib2-devel >= 1:2.32
 BuildRequires:	gsl-devel >= 1.13
 BuildRequires:	gtk+3-devel >= 3.14.5
 BuildRequires:	gtksourceview3-devel >= 3.4.2
-%{?with_glade:BuildRequires:	libgladeui-devel >= 2.0}
+%{?with_glade:BuildRequires:	glade-devel >= 3.0}
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	openssl-devel
@@ -82,25 +83,25 @@ to read and write system files.
 Moduł Perla PSPP udostępnia interfejs do bibliotek wykorzystywanych
 przez pspp do odczytu i zapisu plików systemowych.
 
-%package -n glade3-pspp
-Summary:	Glade3 extensions for PSPP development
-Summary(pl.UTF-8):	Rozszerzenia Glade3 do rozwijania PSPP
+%package glade
+Summary:	Glade extensions for PSPP development
+Summary(pl.UTF-8):	Rozszerzenia Glade do rozwijania PSPP
 Group:		X11/Development/Libraries
-Requires:	libgladeui >= 2.0
+Requires:	glade >= 3.0
 
-%description -n glade3-pspp
-Glade3 extensions for PSPP development.
+%description glade
+Glade extensions for PSPP development.
 
-%description -n glade3-pspp -l pl.UTF-8
-Rozszerzenia Glade3 do rozwijania PSPP.
+%description glade -l pl.UTF-8
+Rozszerzenia Glade do rozwijania PSPP.
 
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
-#{__gettextize}
 %{__libtoolize}
 %{__aclocal} -I gl/m4
 %{__autoconf}
@@ -130,7 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/pspp/lib{pspp,pspp-core}.{la,so}
 %if %{with glade}
 # loadable module
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/glade3/modules/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/glade/modules/*.la
 %endif
 
 %find_lang %{name}
@@ -174,10 +175,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %if %{with glade}
-%files -n glade3-pspp
+%files glade
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/glade3/modules/libglade-psppire.so
-%{_datadir}/glade3/catalogs/psppire.xml
-%{_datadir}/glade3/pixmaps/hicolor/16x16/actions/widget-psppire-psppire-*.png
-%{_datadir}/glade3/pixmaps/hicolor/22x22/actions/widget-psppire-psppire-*.png
+%attr(755,root,root) %{_libdir}/glade/modules/libglade-psppire.so
+%{_datadir}/glade/catalogs/psppire.xml
+%{_datadir}/glade/pixmaps/hicolor/16x16/actions/widget-psppire-psppire-*.png
+%{_datadir}/glade/pixmaps/hicolor/22x22/actions/widget-psppire-psppire-*.png
 %endif
