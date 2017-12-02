@@ -1,0 +1,11 @@
+--- pspp-1.0.1/perl-module/automake.mk.orig	2017-07-30 02:24:53.000000000 +0200
++++ pspp-1.0.1/perl-module/automake.mk	2017-12-02 10:35:47.151608731 +0100
+@@ -42,7 +42,7 @@
+ 	 echo ');') > $(top_builddir)/perl-module/pspp-module-config
+ 
+ perl-module/Makefile: perl-module/Makefile.PL perl-module/pspp-module-config $(module_sources)
+-	$(AM_V_GEN)cd perl-module && $(PERL) Makefile.PL PREFIX=$(prefix) \
++	$(AM_V_GEN)cd perl-module && $(PERL) Makefile.PL INSTALLDIRS=vendor \
+                                                          OPTIMIZE="$(CFLAGS) $(CPPFLAGS)" \
+                                                          LD="`$(PERL) -V::ld:` $(LDFLAGS)"
+ 

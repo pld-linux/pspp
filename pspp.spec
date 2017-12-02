@@ -1,35 +1,46 @@
+#
+# Conditional build:
+%bcond_without 	glade	# Glade extensions for PSPP development
+%bcond_without	perl	# Perl module
+
+%include	/usr/lib/rpm/macros.perl
 Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
-Version:	0.10.2
+Version:	1.0.1
 Release:	1
 License:	GPL v3+
 Group:		Applications/Science
 Source0:	http://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
-# Source0-md5:	9c5a3295d59b07a9a4462148371723ae
+# Source0-md5:	ac18c5da11915e59ec32fe00e541abb8
 Patch0:		%{name}-info.patch
-Patch1:		perl-no-dot-in-inc.patch
+Patch1:		%{name}-perl.patch
 URL:		http://www.gnu.org/software/pspp/
+BuildRequires:	autoconf >= 2.63
+BuildRequires:	automake
 BuildRequires:	cairo-devel >= 1.5
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.32
 BuildRequires:	gsl-devel >= 1.13
-BuildRequires:	gtk+3-devel >= 3.4.2
+BuildRequires:	gtk+3-devel >= 3.14.5
 BuildRequires:	gtksourceview3-devel >= 3.4.2
+%{?with_glade:BuildRequires:	libgladeui-devel >= 2.0}
+BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 2.0
-BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pango-devel >= 1:1.22
 BuildRequires:	perl-base >= 5.005_03
+%{?with_perl:BuildRequires:	perl-devel >= 1:5.8}
 BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
+BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	texinfo
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo >= 1.5
 Requires:	glib2 >= 1:2.32
-Requires:	gtk+3 >= 3.4.2
+Requires:	gtk+3 >= 3.14.5
 Requires:	gtksourceview3 >= 3.4.2
 Requires:	pango >= 1:1.22
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -57,16 +68,50 @@ GNU PSP libraries command line tools.
 %description libs -l pl.UTF-8
 Biblioteki GNU PSPP i narzędzia linii poleceń.
 
+%package -n perl-PSPP
+Summary:	PSPP module for Perl
+Summary(pl.UTF-8):	Moduł PSPP dla Perla
+Group:		Development/Languages/Perl
+Requires:	%{name}-libs = %{version}-%{release}
+
+%description -n perl-PSPP
+PSPP Perl module provides an interface to the libraries used by pspp
+to read and write system files.
+
+%description -n perl-PSPP -l pl.UTF-8
+Moduł Perla PSPP udostępnia interfejs do bibliotek wykorzystywanych
+przez pspp do odczytu i zapisu plików systemowych.
+
+%package -n glade3-pspp
+Summary:	Glade3 extensions for PSPP development
+Summary(pl.UTF-8):	Rozszerzenia Glade3 do rozwijania PSPP
+Group:		X11/Development/Libraries
+Requires:	libgladeui >= 2.0
+
+%description -n glade3-pspp
+Glade3 extensions for PSPP development.
+
+%description -n glade3-pspp -l pl.UTF-8
+Rozszerzenia Glade3 do rozwijania PSPP.
+
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
 
 %build
+#{__gettextize}
+%{__libtoolize}
+%{__aclocal} -I gl/m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--disable-static \
+	%{?with_glade:--with-gui-tools} \
 	--with-openssl \
-	--with-packager="PLD Linux (http://pld-linux.org)"
+	--with-packager="PLD Linux (http://pld-linux.org/)" \
+	%{!?with_perl:--without-perl-module}
 
 %{__make}
 
@@ -76,8 +121,17 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%if %{with perl}
+%{__make} -C perl-module install \
+	DESTDIR=$RPM_BUILD_ROOT
+%endif
+
 # API not exported
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/pspp/lib{pspp,pspp-core}.{la,so}
+%if %{with glade}
+# loadable module
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/glade3/modules/*.la
+%endif
 
 %find_lang %{name}
 
@@ -108,3 +162,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/pspp/libpspp-core-%{version}.so
 %{_mandir}/man1/pspp-convert.1*
 %{_mandir}/man1/pspp-dump-sav.1*
+
+%if %{with perl}
+%files -n perl-PSPP
+%defattr(644,root,root,755)
+%{perl_vendorarch}/PSPP.pm
+%dir %{perl_vendorarch}/auto/PSPP
+%attr(755,root,root) %{perl_vendorarch}/auto/PSPP/PSPP.so
+%{_mandir}/man3/PSPP.3pm*
+%{_mandir}/man3/PSPP::Examples.3pm*
+%endif
+
+%if %{with glade}
+%files -n glade3-pspp
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/glade3/modules/libglade-psppire.so
+%{_datadir}/glade3/catalogs/psppire.xml
+%{_datadir}/glade3/pixmaps/hicolor/16x16/actions/widget-psppire-psppire-*.png
+%{_datadir}/glade3/pixmaps/hicolor/22x22/actions/widget-psppire-psppire-*.png
+%endif
