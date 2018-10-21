@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without 	glade	# Glade extensions for PSPP development
+%bcond_without	glade	# Glade extensions for PSPP development
 %bcond_without	perl	# Perl module
 
 %include	/usr/lib/rpm/macros.perl
@@ -8,7 +8,7 @@ Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
 Version:	1.0.1
-Release:	3
+Release:	4
 License:	GPL v3+
 Group:		Applications/Science
 Source0:	http://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
@@ -16,6 +16,7 @@ Source0:	http://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-perl.patch
 Patch2:		%{name}-glade.patch
+Patch3:		glibc.patch
 URL:		http://www.gnu.org/software/pspp/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake
@@ -100,6 +101,7 @@ Rozszerzenia Glade do rozwijania PSPP.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
