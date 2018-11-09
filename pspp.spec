@@ -7,24 +7,23 @@
 Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
-Version:	1.0.1
-Release:	4
+Version:	1.2.0
+Release:	1
 License:	GPL v3+
 Group:		Applications/Science
 Source0:	http://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
-# Source0-md5:	ac18c5da11915e59ec32fe00e541abb8
+# Source0-md5:	e940d666b586f5bd2f17a2b305fac71f
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-perl.patch
 Patch2:		%{name}-glade.patch
-Patch3:		glibc.patch
 URL:		http://www.gnu.org/software/pspp/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake
 BuildRequires:	cairo-devel >= 1.5
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.32
+BuildRequires:	glib2-devel >= 1:2.44
 BuildRequires:	gsl-devel >= 1.13
-BuildRequires:	gtk+3-devel >= 3.14.5
+BuildRequires:	gtk+3-devel >= 3.18.0
 BuildRequires:	gtksourceview3-devel >= 3.4.2
 %{?with_glade:BuildRequires:	glade-devel >= 3.0}
 BuildRequires:	libtool
@@ -37,6 +36,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm-perlprov >= 4.1-13
+BuildRequires:	spread-sheet-widget-devel >= 0.3
 BuildRequires:	texinfo
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
@@ -101,7 +101,6 @@ Rozszerzenia Glade do rozwijania PSPP.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %{__libtoolize}
@@ -138,6 +137,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %find_lang %{name}
 
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -157,7 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS ONEWS README THANKS TODO
+%doc AUTHORS ChangeLog NEWS ONEWS README THANKS
 %attr(755,root,root) %{_bindir}/pspp-convert
 %attr(755,root,root) %{_bindir}/pspp-dump-sav
 %dir %{_libdir}/pspp
