@@ -3,7 +3,6 @@
 %bcond_without	glade	# Glade extensions for PSPP development
 %bcond_without	perl	# Perl module
 
-%include	/usr/lib/rpm/macros.perl
 Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
