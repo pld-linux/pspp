@@ -35,6 +35,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm-perlprov >= 4.1-13
+BuildRequires:	rpmbuild(macros) >= 1.745
 BuildRequires:	spread-sheet-widget-devel >= 0.6
 BuildRequires:	texinfo
 BuildRequires:	zlib-devel
