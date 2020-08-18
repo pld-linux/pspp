@@ -6,23 +6,23 @@
 Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
-Version:	1.2.0
-Release:	5
+Version:	1.4.0
+Release:	1
 License:	GPL v3+
 Group:		Applications/Science
-Source0:	http://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
-# Source0-md5:	e940d666b586f5bd2f17a2b305fac71f
+Source0:	https://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
+# Source0-md5:	76ce7964fd0ce3191823a2ca3544772a
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-perl.patch
 Patch2:		%{name}-glade.patch
 URL:		http://www.gnu.org/software/pspp/
 BuildRequires:	autoconf >= 2.63
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.10.1
 BuildRequires:	cairo-devel >= 1.5
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.44
 BuildRequires:	gsl-devel >= 1.13
-BuildRequires:	gtk+3-devel >= 3.18.0
+BuildRequires:	gtk+3-devel >= 3.22.0
 BuildRequires:	gtksourceview3-devel >= 3.4.2
 %{?with_glade:BuildRequires:	glade-devel >= 3.0}
 BuildRequires:	libtool
@@ -35,15 +35,19 @@ BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm-perlprov >= 4.1-13
-BuildRequires:	spread-sheet-widget-devel >= 0.3
+BuildRequires:	spread-sheet-widget-devel >= 0.6
 BuildRequires:	texinfo
 BuildRequires:	zlib-devel
+Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	gtk-update-icon-cache
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo >= 1.5
-Requires:	glib2 >= 1:2.32
-Requires:	gtk+3 >= 3.14.5
+Requires:	glib2 >= 1:2.44
+Requires:	gtk+3 >= 3.22.0
 Requires:	gtksourceview3 >= 3.4.2
 Requires:	pango >= 1:1.22
+Requires:	shared-mime-info
+Requires:	spread-sheet-widget >= 0.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -141,18 +145,31 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+%update_desktop_database
+%update_icon_cache hicolor
+%update_mime_database
+
+%postun
+%update_desktop_database
+%update_icon_cache hicolor
+%update_mime_database
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/pspp
+%attr(755,root,root) %{_bindir}/pspp-output
 %attr(755,root,root) %{_bindir}/psppire
 %{_datadir}/pspp
-%{_datadir}/appdata/pspp.appdata.xml
-%{_desktopdir}/pspp.desktop
+%{_datadir}/metainfo/org.fsf.pspp.metainfo.xml
+%{_datadir}/mime/packages/pspp.xml
+%{_desktopdir}/org.fsf.pspp.desktop
 %{_iconsdir}/hicolor/*/apps/pspp.*
 %{_iconsdir}/hicolor/*/mimetypes/application-x-spss-*.png
 %{_infodir}/pspp.info*
 %{_infodir}/pspp-dev.info*
 %{_mandir}/man1/pspp.1*
+%{_mandir}/man1/pspp-output.1*
 %{_mandir}/man1/psppire.1*
 
 %files libs
