@@ -1,9 +1,0 @@
---- pspp-1.0.1/glade/automake.mk.orig	2017-07-30 02:24:53.000000000 +0200
-+++ pspp-1.0.1/glade/automake.mk	2017-12-02 13:50:20.913402469 +0100
-@@ -67,4 +67,5 @@
- libglade_psppire_la_CFLAGS = $(GLADE_UI_CFLAGS) $(GLADE_CFLAGS) \
- 	$(GTKSOURCEVIEW_CFLAGS) -I $(top_srcdir)/src/ui/gui -DDEBUGGING
- 
--libglade_psppire_la_LIBADD = gl/libgl.la
-+libglade_psppire_la_LIBADD = gl/libgl.la $(GLADE_UI_LIBS)
-+libglade_psppire_la_LDFLAGS = -avoid-version
