@@ -6,23 +6,23 @@
 Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
-Version:	1.4.1
-Release:	4
+Version:	1.6.0
+Release:	1
 License:	GPL v3+
 Group:		Applications/Science
 Source0:	https://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
-# Source0-md5:	7852af2e4f5ac1b57bd2c1636dca7b40
+# Source0-md5:	bf6d08ebc7fa5879d0e0eeb96c4ebf75
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-perl.patch
 URL:		http://www.gnu.org/software/pspp/
-BuildRequires:	autoconf >= 2.63
-BuildRequires:	automake >= 1:1.10.1
+BuildRequires:	autoconf >= 2.64
+BuildRequires:	automake >= 1:1.14
 BuildRequires:	cairo-devel >= 1.5
 BuildRequires:	gettext-tools >= 0.20
 BuildRequires:	glib2-devel >= 1:2.44
 BuildRequires:	gsl-devel >= 1.13
 BuildRequires:	gtk+3-devel >= 3.22.0
-BuildRequires:	gtksourceview3-devel >= 3.4.2
+BuildRequires:	gtksourceview4-devel >= 4.0
 %{?with_glade:BuildRequires:	glade-devel >= 3.0}
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 2.0
@@ -32,10 +32,11 @@ BuildRequires:	perl-base >= 5.005_03
 %{?with_perl:BuildRequires:	perl-devel >= 1:5.8}
 BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
+BuildRequires:	python3 >= 1:3
 BuildRequires:	readline-devel
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.745
-BuildRequires:	spread-sheet-widget-devel >= 0.6
+BuildRequires:	spread-sheet-widget-devel >= 0.7
 BuildRequires:	texinfo
 BuildRequires:	zlib-devel
 Requires(post,postun):	desktop-file-utils
@@ -44,10 +45,10 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo >= 1.5
 Requires:	glib2 >= 1:2.44
 Requires:	gtk+3 >= 3.22.0
-Requires:	gtksourceview3 >= 3.4.2
+Requires:	gtksourceview4 >= 4.0
 Requires:	pango >= 1:1.22
 Requires:	shared-mime-info
-Requires:	spread-sheet-widget >= 0.6
+Requires:	spread-sheet-widget >= 0.7
 %if %{without glade}
 Obsoletes:	pspp-glade < 1.4.1
 %endif
@@ -164,12 +165,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/psppire
 %{_datadir}/pspp
 %{_datadir}/metainfo/org.fsf.pspp.metainfo.xml
-%{_datadir}/mime/packages/pspp.xml
+%{_datadir}/mime/packages/org.fsf.pspp.xml
 %{_desktopdir}/org.fsf.pspp.desktop
-%{_iconsdir}/hicolor/*/apps/pspp.*
-%{_iconsdir}/hicolor/*/mimetypes/application-x-spss-*.png
+%{_iconsdir}/hicolor/*/apps/org.fsf.pspp.*
+%{_iconsdir}/hicolor/*x*/mimetypes/application-x-spss-*.png
 %{_infodir}/pspp.info*
 %{_infodir}/pspp-dev.info*
+%{_infodir}/pspp-figures
+%{_infodir}/screenshots
 %{_mandir}/man1/pspp.1*
 %{_mandir}/man1/pspp-output.1*
 %{_mandir}/man1/psppire.1*

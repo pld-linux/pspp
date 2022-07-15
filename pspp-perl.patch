@@ -1,12 +1,11 @@
-diff -urNp -x '*.orig' pspp-1.4.1.org/perl-module/automake.mk pspp-1.4.1/perl-module/automake.mk
---- pspp-1.4.1.org/perl-module/automake.mk	2019-12-02 00:53:52.000000000 +0100
-+++ pspp-1.4.1/perl-module/automake.mk	2021-05-07 23:43:28.144811523 +0200
-@@ -42,7 +42,7 @@ perl-module/pspp-module-config: Makefile
- 	 echo ');') > $(top_builddir)/perl-module/pspp-module-config
+--- pspp-1.6.0/perl-module/automake.mk.orig	2022-07-14 22:08:57.941719843 +0200
++++ pspp-1.6.0/perl-module/automake.mk	2022-07-14 22:12:14.743987007 +0200
+@@ -45,7 +45,7 @@ perl-module/Makefile: perl-module/Makefi
+ 	$(SED)  -e "/^INC/s/\([^=]\)  *-I/\1\" -I/g" -e "/^INC/s/  *-I */ -I\"/g" -e "/^INC/s/ *$$/\"/" -e "/^MYEXTLIB/s/\([^=]\) \([^=]\)/\1\\\\ \2/g" $< > $@
  
- perl-module/Makefile: perl-module/Makefile.PL perl-module/pspp-module-config $(module_sources)
+ perl-module/MakefileX: perl-module/Makefile.PL perl-module/pspp-module-config $(module_sources)
 -	$(AM_V_GEN)cd perl-module && $(PERL) Makefile.PL PREFIX=$(prefix) \
 +	$(AM_V_GEN)cd perl-module && $(PERL) Makefile.PL INSTALLDIRS=vendor \
-                                                          OPTIMIZE="$(CFLAGS) $(CPPFLAGS)" \
+                                                          OPTIMIZE="$(CFLAGS) $(CPPFLAGS) -Wno-error" \
                                                           LD="`$(PERL) -e 'use Config::Perl::V;print Config::Perl::V::myconfig()->{config}{ld};'` $(LDFLAGS)"
  
