@@ -6,12 +6,12 @@
 Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
-Version:	1.6.0
+Version:	1.6.2
 Release:	1
 License:	GPL v3+
 Group:		Applications/Science
 Source0:	https://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
-# Source0-md5:	bf6d08ebc7fa5879d0e0eeb96c4ebf75
+# Source0-md5:	0e2aecdf978b9de9feb94214e39185bd
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-perl.patch
 URL:		http://www.gnu.org/software/pspp/
@@ -26,7 +26,6 @@ BuildRequires:	gtksourceview4-devel >= 4.0
 %{?with_glade:BuildRequires:	glade-devel >= 3.0}
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 2.0
-BuildRequires:	openssl-devel
 BuildRequires:	pango-devel >= 1:1.22
 BuildRequires:	perl-base >= 5.005_03
 %{?with_perl:BuildRequires:	perl-devel >= 1:5.8}
@@ -117,7 +116,6 @@ Rozszerzenia Glade do rozwijania PSPP.
 %configure \
 	--disable-static \
 	%{?with_glade:--with-gui-tools} \
-	--with-openssl \
 	--with-packager="PLD Linux (http://pld-linux.org/)" \
 	%{!?with_perl:--without-perl-module}
 
@@ -164,10 +162,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pspp-output
 %attr(755,root,root) %{_bindir}/psppire
 %{_datadir}/pspp
-%{_datadir}/metainfo/org.fsf.pspp.metainfo.xml
-%{_datadir}/mime/packages/org.fsf.pspp.xml
-%{_desktopdir}/org.fsf.pspp.desktop
-%{_iconsdir}/hicolor/*/apps/org.fsf.pspp.*
+%{_datadir}/metainfo/org.gnu.pspp.metainfo.xml
+%{_datadir}/mime/packages/org.gnu.pspp.xml
+%{_desktopdir}/org.gnu.pspp.desktop
+%{_iconsdir}/hicolor/*/apps/org.gnu.pspp.*
 %{_iconsdir}/hicolor/*x*/mimetypes/application-x-spss-*.png
 %{_infodir}/pspp.info*
 %{_infodir}/pspp-dev.info*
