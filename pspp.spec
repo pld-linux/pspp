@@ -6,12 +6,12 @@
 Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
-Version:	1.6.2
-Release:	3
+Version:	2.0.0
+Release:	1
 License:	GPL v3+
 Group:		Applications/Science
 Source0:	https://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
-# Source0-md5:	0e2aecdf978b9de9feb94214e39185bd
+# Source0-md5:	11f5949311bfe66a44999b9d7db6c99b
 Patch0:		%{name}-info.patch
 Patch1:		%{name}-perl.patch
 URL:		http://www.gnu.org/software/pspp/
@@ -24,8 +24,9 @@ BuildRequires:	gsl-devel >= 1.13
 BuildRequires:	gtk+3-devel >= 3.22.0
 BuildRequires:	gtksourceview4-devel >= 4.0
 %{?with_glade:BuildRequires:	glade-devel >= 3.0}
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:2
 BuildRequires:	libxml2-devel >= 2.0
+BuildRequires:	openssl-devel
 BuildRequires:	pango-devel >= 1:1.22
 BuildRequires:	perl-base >= 5.005_03
 %{?with_perl:BuildRequires:	perl-devel >= 1:5.8}
@@ -37,6 +38,8 @@ BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.745
 BuildRequires:	spread-sheet-widget-devel >= 0.7
 BuildRequires:	texinfo
+# tex
+BuildRequires:	texlive
 BuildRequires:	zlib-devel
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
@@ -126,6 +129,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# program no longer installed, but manual still is... restore for now
+install utilities/pspp-dump-sav $RPM_BUILD_ROOT%{_bindir}
 
 %if %{with perl}
 %{__make} -C perl-module install \
