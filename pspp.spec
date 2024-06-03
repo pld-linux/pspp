@@ -7,7 +7,7 @@ Summary:	GNU PSPP - program for statistical analysis of sampled data
 Summary(pl.UTF-8):	GNU PSPP - program do analizy statystycznej danych próbkowanych
 Name:		pspp
 Version:	2.0.1
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Science
 Source0:	https://ftp.gnu.org/gnu/pspp/%{name}-%{version}.tar.gz
